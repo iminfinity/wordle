@@ -1,4 +1,4 @@
-[
+export const dicionary: string[] = [
   "aahed",
   "aalii",
   "aargh",
@@ -12970,5 +12970,5 @@
   "rower",
   "artsy",
   "rural",
-  "shave"
-]
+  "shave",
+];

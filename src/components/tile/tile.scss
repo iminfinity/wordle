@@ -1,0 +1,28 @@
+.tile {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 4rem;
+  width: 4rem;
+  border: 0.2rem solid #757577;
+  margin-left: 0.2rem;
+  font-size: 2.5rem;
+  user-select: none;
+  text-transform: uppercase;
+  &.current {
+    border: 0.2rem solid #a5a5a8;
+  }
+
+  &.wrong {
+    background-color: gray;
+    border: none;
+  }
+  &.misplaced {
+    background-color: #b59f3b;
+    border: none;
+  }
+  &.correct {
+    background-color: #538d4e;
+    border: none;
+  }
+}
