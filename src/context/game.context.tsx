@@ -38,19 +38,6 @@ const GameContextProvider: FC = ({ children }) => {
     return new Array(6).fill(new Array(5).fill(""));
   });
 
-  useEffect(() => {
-    setLayers((prev) => {
-      let i = 0;
-      let word = new Array(5).fill("");
-      for (const char of currentString.split("")) {
-        word[i] = char;
-        i++;
-      }
-      prev[currentLayer] = word;
-      return prev;
-    });
-  }, [currentString, currentLayer]);
-
   const pressKey = (key: string) => {
     if (currentString.length >= 5) return;
     setCurrentString((prev) => {
@@ -58,21 +45,37 @@ const GameContextProvider: FC = ({ children }) => {
       return prev;
     });
   };
-
+  console.log(gameWord);
+  console.log(JSON.stringify(layers));
   const submitGuess = () => {
     let word = currentString;
-    if (gameWord === word) setGameOver(true);
-    else {
-      if (checkIfWord(word)) {
-        if (currentLayer === 6) {
-          setGameOver(true);
-          // lost the game logic
-          return;
-        }
+    let layer = currentLayer;
+    if (currentString.length < 5) {
+      return;
+    }
+    if (gameWord === word) {
+      setGameOver(true);
+      return;
+    }
+    const result = checkIfWord(word);
+    switch (result) {
+      case true:
+        setCurrentString("");
+        console.log(layer, "--", word);
+        setLayers((prev) => {
+          prev[layer] = word.split("");
+          console.log(prev[layer]);
+          console.log(prev);
+          return prev;
+        });
         setCurrentLayer((prev) => prev + 1);
-      } else {
-        // not a word logic
-      }
+        break;
+      case false:
+        alert("Not a word");
+        setCurrentString("");
+        break;
+      default:
+        break;
     }
   };
 
