@@ -45,8 +45,7 @@ const GameContextProvider: FC = ({ children }) => {
       return prev;
     });
   };
-  console.log(gameWord);
-  console.log(JSON.stringify(layers));
+
   const submitGuess = () => {
     let word = currentString;
     let layer = currentLayer;
@@ -61,11 +60,8 @@ const GameContextProvider: FC = ({ children }) => {
     switch (result) {
       case true:
         setCurrentString("");
-        console.log(layer, "--", word);
         setLayers((prev) => {
           prev[layer] = word.split("");
-          console.log(prev[layer]);
-          console.log(prev);
           return prev;
         });
         setCurrentLayer((prev) => prev + 1);

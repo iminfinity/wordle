@@ -19,7 +19,13 @@ const Layer: React.FC<Props> = ({ id }) => {
             currentString.length > index ? currentString[index] : item
           )
           .map((character, index) => (
-            <Tile character={character} key={index} />
+            <Tile
+              character={character}
+              key={index}
+              index={index}
+              layerIndex={id}
+              current
+            />
           ))}
       </ul>
     );
@@ -28,7 +34,7 @@ const Layer: React.FC<Props> = ({ id }) => {
   return (
     <ul className="layer">
       {layers[id].map((character, index) => (
-        <Tile character={character} key={index} />
+        <Tile character={character} key={index} index={index} layerIndex={id} />
       ))}
     </ul>
   );
