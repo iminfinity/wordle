@@ -10,10 +10,10 @@ interface Props {
 }
 
 const Tile: React.FC<Props> = ({ character, index, current, layerIndex }) => {
-  const { gameWord, currentLayer } = useContext(GameContext);
+  const { gameWord, currentLayer, gameOver } = useContext(GameContext);
 
   const getClassName = () => {
-    if (current) return "current";
+    if (current && !gameOver) return "current";
     if (currentLayer < layerIndex) return "";
     if (gameWord.split("")[index] === character) {
       return "correct";

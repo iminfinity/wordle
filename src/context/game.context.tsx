@@ -41,12 +41,6 @@ const GameContextProvider: FC = ({ children }) => {
     return new Array(6).fill(new Array(5).fill(""));
   });
 
-  useEffect(() => {
-    setTimeout(() => {
-      setAlertMessage("");
-    }, 5000);
-  }, [currentString]);
-
   const pressKey = (key: string) => {
     if (currentString.length >= 5) return;
     setCurrentString((prev) => {
