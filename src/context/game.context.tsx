@@ -11,6 +11,7 @@ interface GameValues {
   submitGuess: () => void;
   deleteKey: () => void;
   layers: string[][];
+  alertMessage: string;
 }
 
 const contextDefaultValues: GameValues = {
@@ -23,6 +24,7 @@ const contextDefaultValues: GameValues = {
   submitGuess: () => {},
   deleteKey: () => {},
   layers: [],
+  alertMessage: "",
 };
 
 export const GameContext = createContext<GameValues>(contextDefaultValues);
@@ -33,10 +35,17 @@ const GameContextProvider: FC = ({ children }) => {
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [currentLayer, setCurrentLayer] = useState<number>(0);
   const [currentString, setCurrentString] = useState<string>("");
+  const [alertMessage, setAlertMessage] = useState<string>("");
 
   const [layers, setLayers] = useState<string[][]>(() => {
     return new Array(6).fill(new Array(5).fill(""));
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAlertMessage("");
+    }, 5000);
+  }, [currentString]);
 
   const pressKey = (key: string) => {
     if (currentString.length >= 5) return;
@@ -54,12 +63,14 @@ const GameContextProvider: FC = ({ children }) => {
     }
     if (gameWord === word) {
       setGameOver(true);
+      setAlertMessage("You Won");
       return;
     }
     const result = checkIfWord(word);
     switch (result) {
       case true:
         setCurrentString("");
+        setAlertMessage("Try Again");
         setLayers((prev) => {
           prev[layer] = word.split("");
           return prev;
@@ -67,7 +78,7 @@ const GameContextProvider: FC = ({ children }) => {
         setCurrentLayer((prev) => prev + 1);
         break;
       case false:
-        alert("Not a word");
+        setAlertMessage("Not a word");
         setCurrentString("");
         break;
       default:
@@ -98,6 +109,7 @@ const GameContextProvider: FC = ({ children }) => {
     submitGuess,
     deleteKey,
     layers,
+    alertMessage,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
