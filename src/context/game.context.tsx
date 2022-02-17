@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState, useEffect } from "react";
+import { createContext, FC, useContext, useState } from "react";
 import { WordContext } from "./word.context";
 
 interface GameValues {
@@ -69,6 +69,10 @@ const GameContextProvider: FC = ({ children }) => {
           prev[layer] = word.split("");
           return prev;
         });
+        if (currentLayer === 5) {
+          setGameOver(true);
+          setAlertMessage(`Game Over. <br/>The word was <b>${gameWord}</b>`);
+        }
         setCurrentLayer((prev) => prev + 1);
         break;
       case false:
